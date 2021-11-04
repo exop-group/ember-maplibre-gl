@@ -1,30 +1,29 @@
 # API Reference
 
-- [`ember-mapbox-gl`](#ember-mapbox-gl)
-- [`ember-mapbox-gl` config](#configuration)
-- [`mapbox-gl`](#mapbox-gl)
+- [`ember-maplibre-gl`](#ember-maplibre-gl)
+- [`ember-maplibre-gl` config](#configuration)
+- [`maplibre-gl`](#maplibre-gl)
 - [`map-source`](#map-source)
 - [`map-source-layer`](#map-source-layer)
 - [`map-on` event](#map-on)
 - [`map-popup`](#map-popup)
 - [`map-image`](#map-image)
 
-## ember-mapbox-gl
+## ember-maplibre-gl
 
-[mapbox-gl-js](https://www.mapbox.com/mapbox-gl-js/api/) bindings to Ember.
-Aims to be a fairly thin wrapper around the mapbox API.
+[maplibre-gl-js](https://maplibre.org/maplibre-gl-js-docs/api/) bindings to Ember.
+Aims to be a fairly thin wrapper around the MapLibre API.
 
-Using this addon will mostly consist of creating a map (or maps), adding [sources of data](https://www.mapbox.com/mapbox-gl-js/style-spec/#sources) to the map, adding [layers](https://www.mapbox.com/mapbox-gl-js/style-spec/#layers) to render the data from the sources, and calling [functions on the map](https://www.mapbox.com/mapbox-gl-js/api/#map) to manipulate the camera.
+Using this addon will mostly consist of creating a map (or maps), adding [sources of data](https://maplibre.org/maplibre-gl-js-docs/style-spec/#sources) to the map, adding [layers](https://maplibre.org/maplibre-gl-js-docs/style-spec/#layers) to render the data from the sources, and calling [functions on the map](https://maplibre.org/maplibre-gl-js-docs/api/#map) to manipulate the camera.
 
 ## configuration
 
-Add a `mapbox-gl` entry to ENV.
+Add a `maplibre-gl` entry to ENV.
 
 ### Properties
-Available properties are documented in the [mapbox-gl-js#map API](https://www.mapbox.com/mapbox-gl-js/api/#map).
+Available properties are documented in the [maplibre-gl-js#map API](https://maplibre.org/maplibre-gl-js-docs/api/#map).
 
-- `accessToken`: Required. Your [mapbox token](https://www.mapbox.com/help/how-access-tokens-work/).
-- `map`: Optional. Default options for all map instances. Additional options are documented in the [mapbox-gl Map docs](https://www.mapbox.com/mapbox-gl-js/api/#map).
+- `map`: Optional. Default options for all map instances. Additional options are documented in the [maplibre-gl Map docs](https://maplibre.org/maplibre-gl-js-docs/api/#map).
 - `background`: Optional. Default options for all background layers.
 - `fill`: Optional. Default options for all fill layers.
 - `line`: Optional. Default options for all line layers.
@@ -40,12 +39,11 @@ Available properties are documented in the [mapbox-gl-js#map API](https://www.ma
 module.exports = function(environment) {
   const ENV = {
     // other env properties
-    'mapbox-gl': {
-      accessToken: 'YOUR ACCESS TOKEN HERE',
+    'maplibre-gl': {
       map: {
         minZoom: 2,
         maxZoom: 14,
-        style: 'mapbox://styles/mapbox/basic-v9',
+        style: 'https://demotiles.maplibre.org/style.json',
         zoom: 13,
         center: [ -96.7969879, 32.7766642 ]
       },
@@ -60,24 +58,24 @@ module.exports = function(environment) {
 };
 ```
 
-## mapbox-gl
+## maplibre-gl
 
-Component that creates a new [mapbox-gl-js instance](https://www.mapbox.com/mapbox-gl-js/api/).
+Component that creates a new [maplibre-gl-js instance](https://maplibre.org/maplibre-gl-js-docs/api/).
 
 ### Properties
 - `initOptions`
-  - An options hash to pass on to the [mapbox constructor](https://www.mapbox.com/mapbox-gl-js/api/#map). This is only used during map construction, and updates will have no effect.
+  - An options hash to pass on to the [maplibre constructor](https://maplibre.org/maplibre-gl-js-docs/api/#map). This is only used during map construction, and updates will have no effect.
 - `mapLoaded`
-  - action function to call when the map has finished loading. Note that the component does not yield until the map has loaded, so this is the only way to listen for the mapbox load event.
+  - action function to call when the map has finished loading. Note that the component does not yield until the map has loaded, so this is the only way to listen for the maplibre load event.
 
 ### Example
 ```hbs
-{{#mapbox-gl initOptions=(hash ...propsHere) mapLoaded=(action 'mapLoaded') as |map|}}
-{{/mapbox-gl}}
+{{#maplibre-gl initOptions=(hash ...propsHere) mapLoaded=(action 'mapLoaded') as |map|}}
+{{/maplibre-gl}}
 ```
 
 ## map-source
-Adds a data source to the map. The API matches the mapbox [source docs](https://www.mapbox.com/mapbox-gl-js/api/#sources).
+Adds a data source to the map. The API matches the maplibre [source docs](https://maplibre.org/maplibre-gl-js-docs/api/#sources).
 
 ### Properties
 - `options`
@@ -85,11 +83,11 @@ Adds a data source to the map. The API matches the mapbox [source docs](https://
 - `options.type`
   - A string detailing the map source type. Typically `geojson`.
 - `options.data`
-  - A data hash for the map, following the source.data API detailed by mapbox docs.
+  - A data hash for the map, following the source.data API detailed by maplibre docs.
 
 ### Example
 ```hbs
-{{#mapbox-gl as |map|}}
+{{#maplibre-gl as |map|}}
   {{#map.source options=(hash
     type='geojson'
     data=(hash
@@ -105,19 +103,19 @@ Adds a data source to the map. The API matches the mapbox [source docs](https://
       )
     ))}}
   {{/map.source}}
-{{/mapbox-gl}}
+{{/maplibre-gl}}
 ```
 
 ## map-source-layer
-Adds a layer to the map. A map can have many layers. The API matches the mapbox [layer docs](https://www.mapbox.com/mapbox-gl-js/style-spec/#layers).
+Adds a layer to the map. A map can have many layers. The API matches the maplibre [layer docs](https://maplibre.org/maplibre-gl-js-docs/style-spec/#layers).
 
 ### Properties
 - `layer`
-  - A hash to pass on to the mapbox [layer](https://www.mapbox.com/mapbox-gl-js/style-spec/#layers).
+  - A hash to pass on to the maplibre [layer](https://maplibre.org/maplibre-gl-js-docs/style-spec/#layers).
 
 ### Example
 ```hbs
-{{#mapbox-gl as |map|}}
+{{#maplibre-gl as |map|}}
   {{#map.source options=(hash
     type='geojson'
     data=(hash
@@ -136,11 +134,11 @@ Adds a layer to the map. A map can have many layers. The API matches the mapbox 
         type='circle'
         paint=(hash circle-color='#007cbf' circle-radius=10))}}
   {{/map.source}}
-{{/mapbox-gl}}
+{{/maplibre-gl}}
 ```
 
 # map-on
-Adds an action to listen for [mapbox events](https://www.mapbox.com/mapbox-gl-js/api/#map#on).
+Adds an action to listen for [maplibre events](https://maplibre.org/maplibre-gl-js-docs/api/#map#on).
 
 ### Positional Parameters
 - `eventSource`
@@ -150,9 +148,9 @@ Adds an action to listen for [mapbox events](https://www.mapbox.com/mapbox-gl-js
 
 ### Example
 ```hbs
-{{#mapbox-gl as |map|}}
+{{#maplibre-gl as |map|}}
   {{map.on 'click' (action 'mapClicked')}}
-{{/mapbox-gl}}
+{{/maplibre-gl}}
 ```
 
 ```javascript
@@ -168,7 +166,7 @@ export default Controller.extend({
 ```
 
 # map-popup
-Adds a [popup](https://www.mapbox.com/mapbox-gl-js/api/#popup) to the map.
+Adds a [popup](https://maplibre.org/maplibre-gl-js-docs/api/#popup) to the map.
 
 ### Properties
 - `lngLat`
@@ -176,7 +174,7 @@ Adds a [popup](https://www.mapbox.com/mapbox-gl-js/api/#popup) to the map.
 
 ### Example
 ```hbs
-{{#mapbox-gl as |map|}}
+{{#maplibre-gl as |map|}}
   {{#map.source options=(hash
     type='geojson'
     data=(hash
@@ -199,15 +197,15 @@ Adds a [popup](https://www.mapbox.com/mapbox-gl-js/api/#popup) to the map.
   {{#map.popup lngLat=(array -96.7969879 32.7766642)}}
     Dallas, TX
   {{/map.popup}}
-{{/mapbox-gl}}
+{{/maplibre-gl}}
 ```
 
 # map-image
-Adds an image for use in the map, see [here](https://www.mapbox.com/mapbox-gl-js/api/#map#addimage).
+Adds an image for use in the map, see [here](https://maplibre.org/maplibre-gl-js-docs/api/#map#addimage).
 
 ### Properties
 - `name`
-  - The unique name for the image. The name will be referenced in a source layer as the `icon-image`. Reference [layers-symbol](https://www.mapbox.com/mapbox-gl-js/style-spec/#layers-symbol) for more details. Property can also be used as the first positional parameter.
+  - The unique name for the image. The name will be referenced in a source layer as the `icon-image`. Reference [layers-symbol](https://maplibre.org/maplibre-gl-js-docs/style-spec/#layers-symbol) for more details. Property can also be used as the first positional parameter.
 - `image`
   - The path to your image, typically `/assets/<some_image>`. Property can also be used as the second positional parameter.
 - `width`
@@ -217,7 +215,7 @@ Adds an image for use in the map, see [here](https://www.mapbox.com/mapbox-gl-js
 
 ### Example
 ```hbs
-{{#mapbox-gl as |map|}}
+{{#maplibre-gl as |map|}}
   {{map.image 'cat' '/assets/cat.png' width=48 height=48}}
   {{!-- `name` and `icon-image` used as positional params above --}}
 
@@ -228,7 +226,7 @@ Adds an image for use in the map, see [here](https://www.mapbox.com/mapbox-gl-js
           icon-image='cat'
           icon-size=0.25))}}
   {{/map.source}}
-{{/mapbox-gl}}
+{{/maplibre-gl}}
 ```
 
 ```javascript

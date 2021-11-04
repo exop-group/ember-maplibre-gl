@@ -1,31 +1,29 @@
-# ember-mapbox-gl
+# ember-maplibre-gl
 
 [![Latest NPM release][npm-badge]][npm-badge-url]
 [![TravisCI Build Status][travis-badge]][travis-badge-url]
 [![Ember Observer Score][ember-observer-badge]][ember-observer-url]
 
-[npm-badge]: https://img.shields.io/npm/v/ember-mapbox-gl.svg
-[npm-badge-url]: https://www.npmjs.com/package/ember-mapbox-gl
-[travis-badge]: https://img.shields.io/travis/kturney/ember-mapbox-gl/master.svg
-[travis-badge-url]: https://travis-ci.org/kturney/ember-mapbox-gl
-[ember-observer-badge]: http://emberobserver.com/badges/ember-mapbox-gl.svg
-[ember-observer-url]: http://emberobserver.com/addons/ember-mapbox-gl
+[npm-badge]: https://img.shields.io/npm/v/ember-maplibre-gl.svg
+[npm-badge-url]: https://www.npmjs.com/package/ember-maplibre-gl
+[travis-badge]: https://img.shields.io/travis/kturney/ember-maplibre-gl/master.svg
+[travis-badge-url]: https://travis-ci.org/kturney/ember-maplibre-gl
+[ember-observer-badge]: http://emberobserver.com/badges/ember-maplibre-gl.svg
+[ember-observer-url]: http://emberobserver.com/addons/ember-maplibre-gl
 
-Ember integration with [mapbox-gl-js](https://www.mapbox.com/mapbox-gl-js/api/).
+Ember integration with [maplibre-gl-js](https://maplibre.org/maplibre-gl-js-docs/api/).
 
 ## Installation
 
 ```sh
-ember install ember-mapbox-gl
+ember install ember-maplibre-gl
 ```
 
-Then, add your Mapbox access token to `config/environment.js`:
+Then, add your MapLibre configuration to `config/environment.js`:
 ```javascript
 module.exports = function(environment) {
   let ENV = {
-    'mapbox-gl': {
-      accessToken: 'ACCESS TOKEN HERE'
-    },
+    'maplibre-gl': {},
 }
 ```
 
@@ -44,10 +42,9 @@ See the detailed [API Documentation](API.md).
 Add the following map options to `config/environment.js` to style the map, set a default zoom level, and to provide a default centerpoint:
 
 ```javascript
-'mapbox-gl': {
-  accessToken: 'ACCESS TOKEN HERE',
+'maplibre-gl': {
   map: {
-    style: 'mapbox://styles/mapbox/basic-v9',
+    style: 'https://demotiles.maplibre.org/style.json',
     zoom: 13,
     center: [ -96.7969879, 32.7766642 ]
   }
@@ -77,7 +74,7 @@ export default Controller.extend({
 ```
 
 ```handlebars
-{{#mapbox-gl class='map-container' initOptions=(hash pitch=30) as |map|}}
+{{#maplibre-gl class='map-container' initOptions=(hash pitch=30) as |map|}}
   {{map.on 'click' (action 'mapClicked')}}
 
   {{#map.source options=(hash type='geojson' data=marker) as |source|}}
@@ -85,7 +82,7 @@ export default Controller.extend({
       type='circle'
       paint=(hash circle-color='#007cbf' circle-radius=10))}}
   {{/map.source}}
-{{/mapbox-gl}}
+{{/maplibre-gl}}
 ```
 
 The above example does the following:

@@ -6,25 +6,24 @@ const ALLOWED_ERRORS = ['The operation was aborted', 'Failed to fetch'];
 
 export default function setupMap(hooks) {
   hooks.before(async function () {
-    const MapboxGl = await import('mapbox-gl');
-    this.MapboxGl = MapboxGl.default;
-    this.MapboxGl.accessToken = Config['mapbox-gl'].accessToken;
+    const MaplibreGl = await import('maplibre-gl');
+    this.MaplibreGl = MaplibreGl.default;
 
     await new Promise((resolve) => {
       this._mapContainer = document
         .querySelector(Config.APP.rootElement)
         .appendChild(document.createElement('div'));
 
-      this.map = new this.MapboxGl.Map({
+      this.map = new this.MaplibreGl.Map({
         container: this._mapContainer,
-        style: Config['mapbox-gl'].map.style,
+        style: Config['maplibre-gl'].map.style,
       });
 
       this.map.style.once('data', () => resolve());
 
       const onErr = (ev) => {
         const err = {
-          message: ev.error?.message || 'unknown mapbox error',
+          message: ev.error?.message || 'unknown maplibre error',
           event: ev,
           stack: ev.error?.stack,
         };
