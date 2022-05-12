@@ -1,14 +1,14 @@
 import { assign } from '@ember/polyfills';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { clearRender, render, settled, waitFor, find } from '@ember/test-helpers';
+import { clearRender, render, waitFor } from '@ember/test-helpers';
 import setupMap from '../../helpers/create-map';
 import { hbs } from 'ember-cli-htmlbars';
 import Sinon from 'sinon';
 
 module('Integration | Component | maplibre gl source', function (hooks) {
-  setupRenderingTest(hooks);
   setupMap(hooks);
+  setupRenderingTest(hooks);
 
   hooks.before(function () {
     this.sandbox = Sinon.createSandbox();
@@ -45,8 +45,6 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     assert.ok(addSourceSpy.firstCall.args[0], 'a sourceId is added');
 
     await clearRender();
-
-    await settled();
 
     assert.ok(removeSourceSpy.calledOnce, 'removeSource called once');
     assert.equal(
@@ -99,8 +97,6 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     );
 
     await clearRender();
-
-    await settled();
 
     assert.ok(removeSourceSpy.calledOnce, 'removeSource called once');
     assert.equal(
@@ -274,8 +270,6 @@ module('Integration | Component | maplibre gl source', function (hooks) {
       this.sourceId,
       'correct sourceId is used'
     );
-
-    assert.expectNoDeprecation();
   });
 
   test('it cleans up sources before its containing map is removed when the map goes away', async function (assert) {
@@ -332,8 +326,6 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     );
 
     await clearRender();
-
-    await settled();
 
     assert.ok(removeSourceSpy.calledOnce, 'removeSource called once');
     assert.equal(

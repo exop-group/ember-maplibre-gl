@@ -1,13 +1,13 @@
 # ember-maplibre-gl
 
 [![Latest NPM release][npm-badge]][npm-badge-url]
-[![TravisCI Build Status][travis-badge]][travis-badge-url]
+[![GitHub Actions Build Status][github-actions-badge]][github-actions-badge-url]
 [![Ember Observer Score][ember-observer-badge]][ember-observer-url]
 
 [npm-badge]: https://img.shields.io/npm/v/ember-maplibre-gl.svg
 [npm-badge-url]: https://www.npmjs.com/package/ember-maplibre-gl
-[travis-badge]: https://img.shields.io/travis/kturney/ember-maplibre-gl/master.svg
-[travis-badge-url]: https://travis-ci.org/kturney/ember-maplibre-gl
+[github-actions-badge]: https://github.com/exop-group/ember-maplibre-gl/workflows/CI/badge.svg
+[github-actions-badge-url]: https://github.com/exop-group/ember-maplibre-gl/actions/workflows/ci.yml?query=branch%3Amaster
 [ember-observer-badge]: http://emberobserver.com/badges/ember-maplibre-gl.svg
 [ember-observer-url]: http://emberobserver.com/addons/ember-maplibre-gl
 

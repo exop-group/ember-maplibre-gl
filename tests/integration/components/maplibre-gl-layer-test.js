@@ -7,8 +7,8 @@ import { hbs } from 'ember-cli-htmlbars';
 import Sinon from 'sinon';
 
 module('Integration | Component | maplibre gl layer', function (hooks) {
-  setupRenderingTest(hooks);
   setupMap(hooks);
+  setupRenderingTest(hooks);
 
   hooks.before(function () {
     this.sandbox = Sinon.createSandbox();
@@ -429,28 +429,20 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
     this.set('layer', {
       id: 'test-layer-id',
       type: 'circle',
-      source: 'asvaevr',
-      layout: {
-        visibility: 'visible',
-      },
-      paint: {
-        'circle-color': '#00ffff',
-      },
-    });
-
-    this.map.addSource(this.layer.source, {
-      type: 'geojson',
-      data: {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [-76.53063297271729, 39.18174077994108],
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [-76.53063297271729, 39.18174077994108],
+          },
         },
       },
     });
 
     await render(hbs`
-      {{#maplibre-gl-layer map=map layer=layer map=map as |layer|}}
+      {{#maplibre-gl-layer map=map layer=layer as |layer|}}
         <div id="layer">
           {{layer.id}}
         </div>
