@@ -1,12 +1,12 @@
 {
   "name": "ember-maplibre-gl",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Ember integration for MapLibre GL JS",
   "keywords": [
     "ember-addon"
   ],
-  "homepage": "https://kturney.github.io/ember-maplibre-gl",
-  "repository": "https://github.com/kturney/ember-maplibre-gl",
+  "homepage": "https://github.com/exop-group/ember-maplibre-gl",
+  "repository": "https://github.com/exop-group/ember-maplibre-gl",
   "license": "MIT",
   "author": "Kyle Turney <turney.kyle@gmail.com>",
   "directories": {
