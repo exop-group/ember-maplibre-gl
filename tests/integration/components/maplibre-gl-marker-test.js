@@ -14,7 +14,7 @@ module('Integration | Component | maplibre gl marker', function (hooks) {
     this.set('lngLat', [0, 0]);
 
     await render(
-      hbs`{{maplibre-gl-marker map=map lngLat=lngLat MaplibreGl=MaplibreGl}}`
+      hbs`{{maplibre-gl-marker map=this.map lngLat=this.lngLat MaplibreGl=this.MaplibreGl}}`
     );
   });
 });

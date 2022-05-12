@@ -1,4 +1,3 @@
-import { assign } from '@ember/polyfills';
 import { getOwner } from '@ember/application';
 import Component from '@ember/component';
 import layout from '../templates/components/maplibre-gl';
@@ -58,7 +57,7 @@ export default Component.extend({
       getOwner(this).resolveRegistration('config:environment')['maplibre-gl'] ||
       {};
 
-    const options = assign({}, map, this.initOptions);
+    const options = { ...map, ...this.initOptions };
     options.container = this.element;
 
     this._loader.load(options, this.mapLoaded);

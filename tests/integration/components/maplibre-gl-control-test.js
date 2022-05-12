@@ -11,6 +11,6 @@ module('Integration | Component | maplibre gl control', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(0);
 
-    await render(hbs`{{maplibre-gl-control map=map}}`);
+    await render(hbs`{{maplibre-gl-control map=this.map}}`);
   });
 });

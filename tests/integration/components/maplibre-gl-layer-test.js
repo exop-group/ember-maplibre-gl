@@ -1,4 +1,3 @@
-import { assign } from '@ember/polyfills';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { clearRender, render } from '@ember/test-helpers';
@@ -45,7 +44,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
     try {
       const addLayerSpy = this.sandbox.spy(this.map, 'addLayer');
 
-      await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+      await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
       assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
       assert.deepEqual(
@@ -87,10 +86,12 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
 
     const addLayerSpy = this.sandbox.spy(this.map, 'addLayer');
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer before=before}}`);
+    await render(
+      hbs`{{maplibre-gl-layer map=this.map layer=this.layer before=this.before}}`
+    );
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[1],
       this.before,
       'passes on correct before'
@@ -117,7 +118,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
     const addLayerSpy = this.sandbox.spy(this.map, 'addLayer');
     const removeLayerSpy = this.sandbox.spy(this.map, 'removeLayer');
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
     assert.ok(addLayerSpy.firstCall.args[0].id, 'layer has a generated id');
@@ -125,7 +126,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
     await clearRender();
 
     assert.ok(removeLayerSpy.calledOnce, 'removeLayer called once');
-    assert.equal(
+    assert.strictEqual(
       removeLayerSpy.firstCall.args[0],
       addLayerSpy.firstCall.args[0].id,
       'removes correct layer'
@@ -146,10 +147,12 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       },
     });
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=(hash source=source)}}`);
+    await render(
+      hbs`{{maplibre-gl-layer map=this.map layer=(hash source=this.source)}}`
+    );
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[0].type,
       'line',
       'default layer.type is line'
@@ -173,15 +176,15 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
 
     const addLayerSpy = this.sandbox.spy(this.map, 'addLayer');
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[0].id,
       this.layer.id,
       'layer id is passed through'
     );
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[0].type,
       'line',
       'default layer.type is line'
@@ -207,20 +210,17 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       },
     });
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
-    assert.equal(
+    assert.strictEqual(
       this.map.getLayoutProperty(this.layer.id, 'visibility'),
       'none',
       'layout property was set'
     );
 
-    this.set(
-      'layer',
-      assign({}, this.layer, { layout: { visibility: 'visible' } })
-    );
+    this.set('layer', { ...this.layer, layout: { visibility: 'visible' } });
 
-    assert.equal(
+    assert.strictEqual(
       this.map.getLayoutProperty(this.layer.id, 'visibility'),
       'visible',
       'layout property was updated'
@@ -246,20 +246,17 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       },
     });
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
-    assert.equal(
+    assert.strictEqual(
       this.map.getPaintProperty(this.layer.id, 'circle-color'),
       'white',
       'paint property was set'
     );
 
-    this.set(
-      'layer',
-      assign({}, this.layer, { paint: { 'circle-color': 'black' } })
-    );
+    this.set('layer', { ...this.layer, paint: { 'circle-color': 'black' } });
 
-    assert.equal(
+    assert.strictEqual(
       this.map.getPaintProperty(this.layer.id, 'circle-color'),
       'black',
       'paint property was updated'
@@ -283,7 +280,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       },
     });
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
     assert.deepEqual(
       this.map.getFilter(this.layer.id),
@@ -309,7 +306,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       },
     });
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
     assert.deepEqual(
       this.map.getFilter(this.layer.id),
@@ -317,10 +314,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       'filter was set'
     );
 
-    this.set(
-      'layer',
-      assign({}, this.layer, { filter: ['!=', '$type', 'LineString'] })
-    );
+    this.set('layer', { ...this.layer, filter: ['!=', '$type', 'LineString'] });
 
     assert.deepEqual(
       this.map.getFilter(this.layer.id),
@@ -328,9 +322,13 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       'filter was updated'
     );
 
-    this.set('layer', assign({}, this.layer, { filter: null }));
+    this.set('layer', { ...this.layer, filter: null });
 
-    assert.equal(this.map.getFilter(this.layer.id), null, 'filter was cleared');
+    assert.strictEqual(
+      this.map.getFilter(this.layer.id),
+      undefined,
+      'filter was cleared'
+    );
   });
 
   test('it passes through other layer options', async function (assert) {
@@ -347,7 +345,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
 
     const addLayerSpy = this.sandbox.spy(this.map, 'addLayer');
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
     assert.deepEqual(
@@ -355,7 +353,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       this.layer.metadata,
       'metadata passed through'
     );
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[0]['source-layer'],
       this.layer['source-layer'],
       'source-layer passed through'
@@ -386,15 +384,15 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       'setLayerZoomRange'
     );
 
-    await render(hbs`{{maplibre-gl-layer map=map layer=layer}}`);
+    await render(hbs`{{maplibre-gl-layer map=this.map layer=this.layer}}`);
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[0].minzoom,
       5,
       'minzoom passed through'
     );
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[0].maxzoom,
       10,
       'maxzoom passed through'
@@ -404,21 +402,21 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
       'setLayerZoomRange not called'
     );
 
-    this.set('layer', assign({}, this.layer, { minzoom: 2, maxzoom: 15 }));
+    this.set('layer', { ...this.layer, minzoom: 2, maxzoom: 15 });
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer only called once');
     assert.ok(setLayerZoomRangeSpy.calledOnce, 'setLayerZoomRange calledOnce');
-    assert.equal(
+    assert.strictEqual(
       setLayerZoomRangeSpy.firstCall.args[0],
       this.layer.id,
       'setLayerZoomRange called with correct layerId'
     );
-    assert.equal(
+    assert.strictEqual(
       setLayerZoomRangeSpy.firstCall.args[1],
       2,
       'setLayerZoomRange called with correct minzoom'
     );
-    assert.equal(
+    assert.strictEqual(
       setLayerZoomRangeSpy.firstCall.args[2],
       15,
       'setLayerZoomRange called with correct maxzoom'
@@ -442,7 +440,7 @@ module('Integration | Component | maplibre gl layer', function (hooks) {
     });
 
     await render(hbs`
-      {{#maplibre-gl-layer map=map layer=layer as |layer|}}
+      {{#maplibre-gl-layer map=this.map layer=this.layer as |layer|}}
         <div id="layer">
           {{layer.id}}
         </div>

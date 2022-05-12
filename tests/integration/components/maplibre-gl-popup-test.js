@@ -11,7 +11,7 @@ module('Integration | Component | maplibre gl popup', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(0);
 
-    await render(hbs`{{maplibre-gl-popup map=map MaplibreGl=MaplibreGl}}`);
+    await render(hbs`{{maplibre-gl-popup map=this.map MaplibreGl=this.MaplibreGl}}`);
   });
 
   test('popup events can be subscribed to from the template', async function (assert) {
@@ -20,8 +20,8 @@ module('Integration | Component | maplibre gl popup', function (hooks) {
     };
 
     await render(hbs`
-      {{#maplibre-gl-popup map=map MaplibreGl=MaplibreGl as |popup|}}
-        {{popup.on 'close' onClose}}
+      {{#maplibre-gl-popup map=this.map MaplibreGl=this.MaplibreGl as |popup|}}
+        {{popup.on 'close' this.onClose}}
       {{/maplibre-gl-popup}}
     `);
 
@@ -32,17 +32,17 @@ module('Integration | Component | maplibre gl popup', function (hooks) {
   });
 
   test('it handles re-renders on map clicks after closing', async function (assert) {
-    this.set('clicked', { lngLat: { lng: -93.9688, lat: 37.1314 } });
+    this.set('lngLat', [-93.9688, 37.1314]);
 
     await render(hbs`
-      {{#maplibre-gl-popup lngLat=(array this.clicked.lngLat.lng this.clicked.lngLat.lat) map=map MaplibreGl=MaplibreGl}}
+      {{#maplibre-gl-popup lngLat=this.lngLat map=this.map MaplibreGl=this.MaplibreGl}}
         Hi
       {{/maplibre-gl-popup}}
     `);
 
     await click('.maplibregl-popup-close-button');
 
-    this.set('clicked', { lngLat: { lng: -30.9688, lat: 36.1314 } });
+    this.set('lngLat', [-30.9688, 36.1314]);
 
     assert.dom('.maplibregl-popup-content').containsText('Hi');
   });

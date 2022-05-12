@@ -1,4 +1,4 @@
-import { run } from '@ember/runloop';
+import { next } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -20,21 +20,21 @@ module('Integration | Component | maplibre gl on', function (hooks) {
 
     this.set('eventSource', {
       on(eventName, cb) {
-        assert.equal(eventName, 'onzoom', 'subscribes to event name');
+        assert.strictEqual(eventName, 'onzoom', 'subscribes to event name');
 
-        run.next(cb, event);
+        next(cb, event);
       },
 
       off() {},
     });
 
     this.actions.onEvent = (ev) => {
-      assert.equal(ev, event, 'sends event to the action');
+      assert.strictEqual(ev, event, 'sends event to the action');
       done();
     };
 
     await render(
-      hbs`{{maplibre-gl-on eventSource=eventSource event='onzoom' action=(action 'onEvent')}}`
+      hbs`{{maplibre-gl-on eventSource=this.eventSource event='onzoom' action=(action 'onEvent')}}`
     );
   });
 
@@ -46,23 +46,23 @@ module('Integration | Component | maplibre gl on', function (hooks) {
 
     this.set('eventSource', {
       on(eventName, cb) {
-        assert.equal(eventName, 'onzoom', 'subscribes to event name');
+        assert.strictEqual(eventName, 'onzoom', 'subscribes to event name');
 
-        run.next(cb, event);
+        next(cb, event);
       },
 
       off(eventName) {
-        assert.equal(eventName, 'onzoom', 'unsubscribes to event name');
+        assert.strictEqual(eventName, 'onzoom', 'unsubscribes to event name');
       },
     });
 
     this.actions.onEvent = (ev) => {
-      assert.equal(ev, event, 'sends event to the action');
+      assert.strictEqual(ev, event, 'sends event to the action');
       done();
     };
 
     await render(
-      hbs`{{maplibre-gl-on 'onzoom' (action 'onEvent') eventSource=eventSource}}`
+      hbs`{{maplibre-gl-on 'onzoom' (action 'onEvent') eventSource=this.eventSource}}`
     );
   });
 
@@ -74,25 +74,25 @@ module('Integration | Component | maplibre gl on', function (hooks) {
 
     this.set('eventSource', {
       on(eventName, source, cb) {
-        assert.equal(eventName, 'onzoom', 'subscribes to event name');
-        assert.equal(source, 'layer1', 'passes on layer');
+        assert.strictEqual(eventName, 'onzoom', 'subscribes to event name');
+        assert.strictEqual(source, 'layer1', 'passes on layer');
 
-        run.next(cb, event);
+        next(cb, event);
       },
 
       off(eventName, source) {
-        assert.equal(eventName, 'onzoom', 'unsubscribes to event name');
-        assert.equal(source, 'layer1', 'passes on layer');
+        assert.strictEqual(eventName, 'onzoom', 'unsubscribes to event name');
+        assert.strictEqual(source, 'layer1', 'passes on layer');
       },
     });
 
     this.actions.onEvent = (ev) => {
-      assert.equal(ev, event, 'sends event to the action');
+      assert.strictEqual(ev, event, 'sends event to the action');
       done();
     };
 
     await render(
-      hbs`{{maplibre-gl-on 'onzoom' 'layer1' (action 'onEvent') eventSource=eventSource}}`
+      hbs`{{maplibre-gl-on 'onzoom' 'layer1' (action 'onEvent') eventSource=this.eventSource}}`
     );
   });
 });

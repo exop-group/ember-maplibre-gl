@@ -18,7 +18,7 @@ module('Integration | Component | maplibre gl call', function (hooks) {
     const obj = {
       func(...args) {
         assert.deepEqual(args, expectedArgs, 'should pass on args');
-        assert.equal(this, obj, 'should set the context to the obj');
+        assert.strictEqual(this, obj, 'should set the context to the obj');
 
         return expectedResp;
       },
@@ -27,7 +27,7 @@ module('Integration | Component | maplibre gl call', function (hooks) {
     this.set('obj', obj);
     this.set('args', expectedArgs);
     this.actions.onResp = (resp) => {
-      assert.equal(
+      assert.strictEqual(
         resp,
         expectedResp,
         'should call the onResp action with the obj.func result'
@@ -35,7 +35,7 @@ module('Integration | Component | maplibre gl call', function (hooks) {
     };
 
     await render(
-      hbs`{{maplibre-gl-call obj=obj func='func' args=args onResp=(action 'onResp')}}`
+      hbs`{{maplibre-gl-call obj=this.obj func='func' args=this.args onResp=(action 'onResp')}}`
     );
   });
 
@@ -44,7 +44,7 @@ module('Integration | Component | maplibre gl call', function (hooks) {
     const obj = {
       func(...args) {
         assert.deepEqual(args, ['a', 1, 'z'], 'should pass on args');
-        assert.equal(this, obj, 'should set the context to the obj');
+        assert.strictEqual(this, obj, 'should set the context to the obj');
 
         return expectedResp;
       },
@@ -52,7 +52,7 @@ module('Integration | Component | maplibre gl call', function (hooks) {
 
     this.set('obj', obj);
     this.actions.onResp = (resp) => {
-      assert.equal(
+      assert.strictEqual(
         resp,
         expectedResp,
         'should call the onResp action with the obj.func result'
@@ -60,7 +60,7 @@ module('Integration | Component | maplibre gl call', function (hooks) {
     };
 
     await render(
-      hbs`{{maplibre-gl-call 'func' 'a' 1 'z' obj=obj onResp=(action 'onResp')}}`
+      hbs`{{maplibre-gl-call 'func' 'a' 1 'z' obj=this.obj onResp=(action 'onResp')}}`
     );
   });
 });

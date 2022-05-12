@@ -1,4 +1,3 @@
-import { assign } from '@ember/polyfills';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { clearRender, render, waitFor } from '@ember/test-helpers';
@@ -38,7 +37,7 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     const removeSourceSpy = this.sandbox.spy(this.map, 'removeSource');
 
     await render(
-      hbs`{{maplibre-gl-source map=map options=(hash type='geojson' data=data)}}`
+      hbs`{{maplibre-gl-source map=this.map options=(hash type='geojson' data=this.data)}}`
     );
 
     assert.ok(addSourceSpy.calledOnce, 'addSource called once');
@@ -47,7 +46,7 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     await clearRender();
 
     assert.ok(removeSourceSpy.calledOnce, 'removeSource called once');
-    assert.equal(
+    assert.strictEqual(
       removeSourceSpy.firstCall.args[0],
       addSourceSpy.firstCall.args[0],
       'correct sourceId is removed'
@@ -81,11 +80,11 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     });
 
     await render(
-      hbs`{{maplibre-gl-source map=map sourceId=sourceId options=options}}`
+      hbs`{{maplibre-gl-source map=this.map sourceId=this.sourceId options=this.options}}`
     );
 
     assert.ok(addSourceSpy.calledOnce, 'addSource called once');
-    assert.equal(
+    assert.strictEqual(
       addSourceSpy.firstCall.args[0],
       this.sourceId,
       'correct sourceId is added'
@@ -99,7 +98,7 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     await clearRender();
 
     assert.ok(removeSourceSpy.calledOnce, 'removeSource called once');
-    assert.equal(
+    assert.strictEqual(
       removeSourceSpy.firstCall.args[0],
       this.sourceId,
       'correct sourceId is removed'
@@ -148,11 +147,11 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     });
 
     await render(
-      hbs`{{maplibre-gl-source map=map sourceId=sourceId options=(hash type='geojson' data=data)}}`
+      hbs`{{maplibre-gl-source map=this.map sourceId=this.sourceId options=(hash type='geojson' data=this.data)}}`
     );
 
     assert.ok(addSourceSpy.calledOnce, 'addSource called once');
-    assert.equal(
+    assert.strictEqual(
       addSourceSpy.firstCall.args[0],
       this.sourceId,
       'correct sourceId is added'
@@ -201,11 +200,11 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     const addSourceSpy = this.sandbox.spy(this.map, 'addSource');
 
     await render(
-      hbs`{{maplibre-gl-source map=map sourceId=sourceId options=options}}`
+      hbs`{{maplibre-gl-source map=this.map sourceId=this.sourceId options=this.options}}`
     );
 
     assert.ok(addSourceSpy.calledOnce, 'addSource called once');
-    assert.equal(
+    assert.strictEqual(
       addSourceSpy.firstCall.args[0],
       this.sourceId,
       'correct sourceId is added'
@@ -221,10 +220,7 @@ module('Integration | Component | maplibre gl source', function (hooks) {
       'setCoordinates'
     );
 
-    this.set(
-      'options',
-      assign({}, this.options, { coordinates: updatedCoordinates })
-    );
+    this.set('options', { ...this.options, coordinates: updatedCoordinates });
 
     assert.ok(
       setCoordinatesSpy.calledOnce,
@@ -259,13 +255,13 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     this.sourceId = 'guvvguvguugvu';
 
     await render(hbs`
-      {{#maplibre-gl-source map=map sourceId=sourceId options=(hash type='geojson' data=data) as |source|}}
+      {{#maplibre-gl-source map=this.map sourceId=this.sourceId options=(hash type='geojson' data=this.data) as |source|}}
         {{source.layer layer=(hash type='symbol' layout=(hash icon-image='rocket-15'))}}
       {{/maplibre-gl-source}}
     `);
 
     assert.ok(addLayerSpy.calledOnce, 'addLayer called once');
-    assert.equal(
+    assert.strictEqual(
       addLayerSpy.firstCall.args[0].source,
       this.sourceId,
       'correct sourceId is used'
@@ -305,8 +301,8 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     };
 
     await render(hbs`
-      {{#maplibre-gl mapLoaded=mapLoaded as |map|}}
-        {{map.source sourceId=sourceId options=options}}
+      {{#maplibre-gl mapLoaded=this.mapLoaded as |map|}}
+        {{map.source sourceId=this.sourceId options=this.options}}
         <div id='loaded-sigil'></div>
       {{/maplibre-gl}}
     `);
@@ -314,7 +310,7 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     await waitFor('#loaded-sigil');
 
     assert.ok(addSourceSpy.calledOnce, 'addSource called once');
-    assert.equal(
+    assert.strictEqual(
       addSourceSpy.firstCall.args[0],
       this.sourceId,
       'correct sourceId is added'
@@ -328,7 +324,7 @@ module('Integration | Component | maplibre gl source', function (hooks) {
     await clearRender();
 
     assert.ok(removeSourceSpy.calledOnce, 'removeSource called once');
-    assert.equal(
+    assert.strictEqual(
       removeSourceSpy.firstCall.args[0],
       this.sourceId,
       'correct sourceId is removed'
@@ -353,7 +349,7 @@ module('Integration | Component | maplibre gl source', function (hooks) {
 
     await render(
       hbs`
-        {{#maplibre-gl-source sourceId='test-source-id' map=map options=(hash type='geojson' data=data) as |source|}}
+        {{#maplibre-gl-source sourceId='test-source-id' map=this.map options=(hash type='geojson' data=this.data) as |source|}}
           <div id="source">
             {{source.id}}
           </div>
