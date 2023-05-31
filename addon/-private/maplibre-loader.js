@@ -3,9 +3,6 @@ import EmberObject, { set } from '@ember/object';
 import { Promise as RsvpPromise } from 'rsvp';
 
 class MaplibreLoaderCancelledError extends Error {}
-class MaplibreSupportError extends Error {
-  isMaplibreSupportError = true;
-}
 class MaplibreError extends Error {
   constructor(ev) {
     super(ev.error?.message ?? 'unknown maplibre error');
@@ -57,13 +54,6 @@ export default EmberObject.extend({
     }
 
     this.MaplibreGl = MaplibreGl.default;
-
-    if (!this.MaplibreGl.supported()) {
-      throw new MaplibreSupportError(
-        'maplibre-gl not supported in current browser'
-      );
-    }
-
     const map = (this.map = new this.MaplibreGl.Map(this._mapOptions));
 
     return new RsvpPromise((resolve, reject) => {
