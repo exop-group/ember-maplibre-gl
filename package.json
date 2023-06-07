@@ -81,7 +81,7 @@
     "maplibre-gl": "^3.0.1"
   },
   "engines": {
-    "node": "14.* || >= 16"
+    "node": ">= 16.14.0"
   },
   "ember": {
     "edition": "octane"
@@ -90,7 +90,7 @@
     "configPath": "tests/dummy/config"
   },
   "volta": {
-    "node": "12.22.7",
-    "yarn": "1.22.17"
+    "node": "16.14.0",
+    "yarn": "1.22.19"
   }
 }
