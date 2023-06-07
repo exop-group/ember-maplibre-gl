@@ -28,6 +28,7 @@ export default Component.extend({
       lngLat
     );
 
+    // prettier-ignore
     const options = {
       ...(
         getOwner(this).resolveRegistration('config:environment')['maplibre-gl'] ??
