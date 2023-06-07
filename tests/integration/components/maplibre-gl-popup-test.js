@@ -11,7 +11,9 @@ module('Integration | Component | maplibre gl popup', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(0);
 
-    await render(hbs`{{maplibre-gl-popup map=this.map MaplibreGl=this.MaplibreGl}}`);
+    await render(
+      hbs`{{maplibre-gl-popup map=this.map MaplibreGl=this.MaplibreGl}}`
+    );
   });
 
   test('popup events can be subscribed to from the template', async function (assert) {

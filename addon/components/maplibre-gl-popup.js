@@ -59,6 +59,7 @@ export default Component.extend({
 
     this.domContent = document.createElement('div');
     this._onClose = bind(this, this.onClose);
+    // prettier-ignore
     const options = {
       ...(
         getOwner(this).resolveRegistration('config:environment')['maplibre-gl'] ??
