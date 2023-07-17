@@ -37,7 +37,10 @@ export default Component.extend({
       ...initOptions,
     };
 
-    this.marker = new this.MaplibreGl.Marker(this.domContent, options)
+    this.marker = new this.MaplibreGl.Marker({
+      element: this.domContent,
+      ...options,
+    })
       .setLngLat(lngLat)
       .addTo(this.map);
   },
