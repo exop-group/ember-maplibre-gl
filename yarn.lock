@@ -6682,7 +6682,7 @@ ember-load-initializers@^2.1.2:
     ember-cli-babel "^7.13.0"
     ember-cli-typescript "^2.0.2"
 
-"ember-modal-dialog@github:yapplabs/ember-modal-dialog#31ffee4c657ebe96b1f80adbc39c0339b52236e2":
+ember-modal-dialog@yapplabs/ember-modal-dialog#31ffee4c657ebe96b1f80adbc39c0339b52236e2:
   version "4.0.0-alpha.1"
   resolved "https://codeload.github.com/yapplabs/ember-modal-dialog/tar.gz/31ffee4c657ebe96b1f80adbc39c0339b52236e2"
   dependencies:
@@ -9980,10 +9980,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-maplibre-gl@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-3.0.1.tgz#7af75d2c77ab5325ee1c81bd1638c9b4ee920651"
-  integrity sha512-OdFpejEkvaDwwVT9qAn6oA2h7093VlemaenF2/ssfD3TadNPz5oIVPzywn3cgso5i1D7IMKvEpba0A8A5qvXow==
+maplibre-gl@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-3.2.0.tgz#4b1d8c286e2d52be3b63ea64fea03a6ba097c1f2"
+  integrity sha512-TOo/cV9r8Xy3ngbJtY6JUC7rpjpObrsdO5pt14l5OIw4gY1v5XnxWP16VDSe0zRoncFfDCEBDmRwhfEFwtlbvw==
   dependencies:
     "@mapbox/geojson-rewind" "^0.5.2"
     "@mapbox/jsonlint-lines-primitives" "^2.0.2"
