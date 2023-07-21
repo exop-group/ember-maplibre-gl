@@ -6937,7 +6937,7 @@ e.default=a})),define("ember-maplibre-gl/components/maplibre-gl-marker",["export
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 var o=n.default.extend({layout:i.default,tagName:"",MaplibreGl:null,map:null,initOptions:null,lngLat:null,init(){this._super(...arguments),this.domContent=document.createElement("div")
 const{lngLat:e,initOptions:t}=this,n={...((0,r.getOwner)(this).resolveRegistration("config:environment")["maplibre-gl"]??{}).marker,...t}
-this.marker=new this.MaplibreGl.Marker(this.domContent,n).setLngLat(e).addTo(this.map)},didUpdateAttrs(){this._super(...arguments)
+this.marker=new this.MaplibreGl.Marker({element:this.domContent,...n}).setLngLat(e).addTo(this.map)},didUpdateAttrs(){this._super(...arguments)
 const e=this.lngLat
 this.marker.setLngLat(e)},willDestroy(){this._super(...arguments),this.marker.remove()}})
 e.default=o})),define("ember-maplibre-gl/components/maplibre-gl-on",["exports","@ember/debug","@ember/object","@ember/utils","@ember/runloop","@ember/component"],(function(e,t,r,n,i,o){"use strict"
